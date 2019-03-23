@@ -1,15 +1,15 @@
 // please don't remove
-import {BoxGeometry, Mesh, MeshBasicMaterial, PerspectiveCamera, PointLight, Scene, WebGLRenderer} from 'three';
+import {PerspectiveCamera, Scene, WebGLRenderer} from 'three';
 import {Player} from './player';
 import {Hurdle} from './Hurdle';
 import {Ebene} from './ebene';
 //import {Player} from "./Hurdle";
 
-//if (module.hot)
- //   module.hot.dispose(() => location.reload());
+if (module.hot)
+    module.hot.dispose(() => location.reload());
 
 let scene: Scene = new Scene();
-let camera = new PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 100);
+let camera = new PerspectiveCamera(45, window.innerWidth * 0.5 / window.innerHeight * 0.5, 0.1, 100);
 let renderer = new WebGLRenderer();
 
 renderer.setSize(window.innerWidth, window.innerHeight);
@@ -21,49 +21,48 @@ document.body.appendChild(renderer.domElement);
 //let cube : Mesh = new Mesh(geometry,material);
 
 
-
-camera.position.z = 35;
+camera.position.z = 20;
 
 // Objekte erstellen
 let ebene: Ebene = new Ebene();
-let cylinder = ebene.cylinder;
-scene.add(this.cylinder);
-scene.add(cylinder);
-camera.position.z = 4;
-camera.position.y = 3;
 let player: Player = new Player();
-let hurdle: Hurdle = new Hurdle();
-hurdle.body.position.x = 2.5;
-
-// add to the scene
+scene.add(player.body);
 scene.add(ebene.cylinder);
-// scene.add(player.body);
-// scene.add(hurdle.body);
+
+let hurdles: Hurdle[] = [];
+
+for (let i = 1; i <= 20; i++) {
+    hurdles[i] = new Hurdle();
+    scene.add(hurdles[i].body);
+    hurdles[i].body.position.x = 2.5 * i;
+    hurdles[i].body.position.y = -6.35;
+
+}
+// add to the scene
 
 let winkel = 0;
 let drehWert = 0.1;
 let animate = function () {
     requestAnimationFrame(animate);
-    cylinder.rotation.x += 0;
-    cylinder.rotation.y += 0.01;
-    //cylinder.position.z += 0.01;
-    renderer.render ( scene,camera);
-};
-animate();
 
     if (winkel >= 1 || winkel == 0) {
         drehWert = (-1) * drehWert;
     }
     winkel += drehWert;
 
-    // player.body.rotation.x += drehWert;
     player.body.rotation.y += drehWert;
 
     renderer.render(scene, camera);
-
+    camera.position.x += 0.01;
+    player.body.position.x += 0.01;
 };
 animate();
 
+// let movecamera = () => {
+//     for (let i = 0; i < 200; i++) {
+//     }
+// }
+
 window.addEventListener('keydown', (e) => {
-        player.jump();
+    player.jump();
 });

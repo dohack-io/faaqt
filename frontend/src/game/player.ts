@@ -1,5 +1,6 @@
 import {BoxGeometry, Group, Material, Mesh, MeshBasicMaterial} from 'three';
 import {PlayerStatusEnum} from './enums/player-status.enum';
+import {Ebene} from './ebene';
 
 export class Player {
     set torso(value: Mesh) {
@@ -15,7 +16,7 @@ export class Player {
     /**
      * Gibt an bis zu welch einer Höhe der Spieler springen kann
      */
-    private _jumpHeight: number = 6;
+    private _jumpHeight: number = Ebene.Y_VALUE + 4;
     private _status: PlayerStatusEnum = PlayerStatusEnum.RUNNING;
 
     public constructor() {
@@ -23,6 +24,8 @@ export class Player {
         let torsoMaterial: Material = new MeshBasicMaterial({color: 0xcccccc});
         let torsoGeometry = new BoxGeometry(1, 1, 1, 100);
         this._torso = new Mesh(torsoGeometry, torsoMaterial);
+
+        this._body.position.y = Ebene.Y_VALUE;
         this._body.add(this._torso);
 
     }
@@ -32,28 +35,34 @@ export class Player {
         // if (this.status == PlayerStatusEnum.JUMPING)
         //     return;
 
-        this._status = PlayerStatusEnum.JUMPING;
         let direction = true;
         let id;
+        if (this._status == PlayerStatusEnum.JUMPING)
+            return;
+
         let doJump = () => {
             if (this._body.position.y >= this._jumpHeight) {
                 direction = false;
                 console.log("direction false");
             }
+
             if (direction && this._body.position.y <= this._jumpHeight) {
+                this._status = PlayerStatusEnum.JUMPING;
                 this._body.position.y += 0.1;
                 console.log("up");
                 id = requestAnimationFrame(doJump);
 
-            } else if (!direction && this._body.position.y >= 0) {
+            } else if (!direction && this._body.position.y >= Ebene.Y_VALUE) {
+                this._status = PlayerStatusEnum.JUMPING;
                 console.log("down");
                 this._body.position.y -= 0.1;
                 id = requestAnimationFrame(doJump);
 
             } else {
+                this._status = PlayerStatusEnum.RUNNING;
                 console.log("ende");
                 cancelAnimationFrame(id);
-                this._body.position.y = 0;
+                this._body.position.y = Ebene.Y_VALUE;
             }
         };
         requestAnimationFrame(doJump);
