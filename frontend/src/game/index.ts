@@ -39,7 +39,12 @@ let winkel = 0;
 let drehWert = 0.1;
 let animate = function () {
     requestAnimationFrame(animate);
-    ebene.cylinder.rotation.y -= 0.01;
+    cylinder.rotation.x += 0;
+    cylinder.rotation.y += 0.01;
+    //cylinder.position.z += 0.01;
+    renderer.render ( scene,camera);
+};
+animate();
 
     if (winkel >= 1 || winkel == 0) {
         drehWert = (-1) * drehWert;

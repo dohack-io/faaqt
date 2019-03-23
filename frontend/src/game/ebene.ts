@@ -1,4 +1,7 @@
-import {CylinderGeometry, Matrix4, Mesh, MeshBasicMaterial} from "three";
+import {
+    CircleGeometry, CylinderGeometry, FlatShading, Matrix4, Mesh, MeshBasicMaterial,
+    MeshPhongMaterial, PlaneGeometry, SphereGeometry
+} from "three";
 
 
 export class Ebene {
@@ -7,7 +10,7 @@ export class Ebene {
     private _cylinder;
 
     public constructor() {
-        this.ebene = new CylinderGeometry(6,6,4,20,10);
+        this.ebene = new PlaneGeometry(200,2,2);
         //this.ebene.applyMatrix(new Matrix4().makeRotationX(-Math.PI/2));
 
         this.material = new MeshBasicMaterial({
@@ -15,7 +18,8 @@ export class Ebene {
             opacity: .6,
         });
 
-        this._cylinder = new Mesh(this.ebene, this.material);
+        this._cylinder = new Mesh(this.ebene,this.material);
+        this.cylinder.position.y = -15;
 
     }
 
