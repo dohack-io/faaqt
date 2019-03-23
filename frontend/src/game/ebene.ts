@@ -19,7 +19,7 @@ export class Ebene {
         });
 
         this._cylinder = new Mesh(this.ebene,this.material);
-        this.cylinder.position.y = -15;
+        this.cylinder.position.y = -8;
 
     }
 
