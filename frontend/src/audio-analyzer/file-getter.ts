@@ -2,17 +2,32 @@ export class FileGetter {
     private boundDropListener = this.dropListener.bind(this);
     private boundDragListener = this.dragListener.bind(this);
 
+    private timeout = null;
+
     constructor(private wrapper: HTMLElement) {
         wrapper.addEventListener('drop', this.boundDropListener);
-        wrapper.addEventListener('dragover', this.boundDragListener);
+        document.addEventListener('dragover', this.boundDragListener);
+    }
+
+    show() {
+        this.wrapper.classList.add('shown');
+        if (this.timeout !== null)
+            clearTimeout(this.timeout);
+
+        this.timeout = setTimeout(this.clearShown.bind(this), 700);
+    }
+
+    clearShown() {
+        clearTimeout(this.timeout);
+        this.wrapper.classList.remove('shown');
     }
 
     dragListener(ev: DragEvent) {
         ev.preventDefault();
+        this.show();
     }
 
     dropListener(ev: DragEvent) {
-        console.log('drop initiated', ev);
         ev.preventDefault();
 
         const files = [];
@@ -30,6 +45,7 @@ export class FileGetter {
         }
 
         this.gotFiles.call(undefined, files);
+        this.clearShown();
     }
 
     gotFiles(files: File[]) { }
