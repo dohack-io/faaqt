@@ -33214,8 +33214,18 @@ const three_1 = require("three");
 
 class Ebene {
   constructor() {
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
     this.ebene = new three_1.CylinderGeometry(3, 3, 2, 20, 10); //this.ebene.applyMatrix(new Matrix4().makeRotationX(-Math.PI/2));
 
+=======
+    this.ebene = new three_1.CylinderGeometry(2, 2, 1, 8, 1);
+    this.ebene.applyMatrix(new three_1.Matrix4().makeRotationX(-Math.PI / 2));
+>>>>>>> Stashed changes
+=======
+    this.ebene = new three_1.CylinderGeometry(2, 2, 1, 8, 1);
+    this.ebene.applyMatrix(new three_1.Matrix4().makeRotationX(-Math.PI / 2));
+>>>>>>> Stashed changes
     this.material = new three_1.MeshBasicMaterial({
       color: 0x68c3c0,
       transparent: 0x23190f,
@@ -33250,6 +33260,7 @@ let scene = new three_1.Scene();
 let camera = new three_1.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 let renderer = new three_1.WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight);
+<<<<<<< Updated upstream
 document.body.appendChild(renderer.domElement); //let geometry: BoxGeometry = new BoxGeometry(1, 1, 1);
 //let material: MeshBasicMaterial = new MeshBasicMaterial({color : 0x00ff00});
 //let cube : Mesh = new Mesh(geometry,material);
@@ -33266,6 +33277,25 @@ let animate = function () {
   cylinder.rotation.x += 0;
   cylinder.rotation.y += 0.01; //cylinder.position.z += 0.01;
 
+=======
+document.body.appendChild(renderer.domElement);
+let geometry = new three_1.BoxGeometry(1, 1, 1);
+let material = new three_1.MeshBasicMaterial({
+  color: 0x00ff00
+});
+let cube = new three_1.Mesh(geometry, material);
+camera.position.x = 0;
+camera.position.y = 100;
+camera.position.z = 200;
+let ebene = new ebene_1.Ebene();
+scene.add(ebene.cylinder);
+
+let animate = function () {
+  requestAnimationFrame(animate);
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
+>>>>>>> Stashed changes
   renderer.render(scene, camera);
 };
 
@@ -33298,7 +33328,15 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
   var ws = new WebSocket(protocol + '://' + hostname + ':' + "36459" + '/');
+=======
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "32957" + '/');
+>>>>>>> Stashed changes
+=======
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "32957" + '/');
+>>>>>>> Stashed changes
 
   ws.onmessage = function (event) {
     checkedAssets = {};
