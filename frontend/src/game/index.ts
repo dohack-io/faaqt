@@ -1,15 +1,5 @@
 // please don't remove
-import {
-    AmbientLight,
-    BoxGeometry,
-    DirectionalLight,
-    Fog,
-    Mesh,
-    MeshBasicMaterial,
-    PerspectiveCamera, PointLight,
-    Scene,
-    WebGLRenderer
-} from 'three';
+import {PerspectiveCamera, PointLight, Scene, WebGLRenderer} from 'three';
 import {Player} from './player';
 import {Hurdle} from './Hurdle';
 
@@ -17,7 +7,7 @@ if (module.hot)
     module.hot.dispose(() => location.reload());
 
 let scene: Scene = new Scene();
-let camera =  new PerspectiveCamera(45, window.innerWidth/window.innerHeight, 0.1, 100);
+let camera = new PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 100);
 let renderer = new WebGLRenderer();
 
 renderer.setSize(window.innerWidth, window.innerHeight);
@@ -43,7 +33,7 @@ scene.add(hurdle.body);
 
 let winkel = 0;
 let drehWert = 0.1;
-let animate = function() {
+let animate = function () {
     requestAnimationFrame(animate);
 
     if (winkel >= 1 || winkel == 0) {
@@ -54,15 +44,11 @@ let animate = function() {
     // player.body.rotation.x += drehWert;
     player.body.rotation.y += drehWert;
 
-    renderer.render (scene,camera);
+    renderer.render(scene, camera);
 
 };
 animate();
 
 window.addEventListener('keydown', (e) => {
-    let spacebar = " ";
-    console.log(e.key);
-    if (e.key == spacebar) {
         player.jump();
-    }
 });
