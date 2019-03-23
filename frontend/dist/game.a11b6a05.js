@@ -33210,19 +33210,28 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+const three_1 = require("three");
+
 class Ebene {
-  constructor(a) {
-    this.a = a;
+  constructor() {
+    this.ebene = new three_1.CylinderGeometry(3, 3, 2, 20, 10); //this.ebene.applyMatrix(new Matrix4().makeRotationX(-Math.PI/2));
+
+    this.material = new three_1.MeshBasicMaterial({
+      color: 0x68c3c0,
+      transparent: 0x23190f,
+      opacity: .6
+    });
+    this._cylinder = new three_1.Mesh(this.ebene, this.material);
   }
 
-  eineMethode() {
-    return 4;
+  get cylinder() {
+    return this._cylinder;
   }
 
 }
 
 exports.Ebene = Ebene;
-},{}],"game/index.ts":[function(require,module,exports) {
+},{"three":"../node_modules/three/build/three.module.js"}],"game/index.ts":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -33231,32 +33240,36 @@ Object.defineProperty(exports, "__esModule", {
 
 const three_1 = require("three");
 
-const ebene_1 = require("./ebene");
+const ebene_1 = require("./ebene"); //import {Player} from "./Hurdle";
+//if (module.hot)
+//   module.hot.dispose(() => location.reload());
 
-if (module.hot) module.hot.dispose(() => location.reload());
+
 console.log('%cApplicaction WORKS!', 'color:lightgreen');
 let scene = new three_1.Scene();
 let camera = new three_1.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 let renderer = new three_1.WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight);
-document.body.appendChild(renderer.domElement);
-let geometry = new three_1.BoxGeometry(1, 1, 1);
-let material = new three_1.MeshBasicMaterial({
-  color: 0x00ff00
-});
-let cube = new three_1.Mesh(geometry, material);
-scene.add(cube);
-camera.position.z = 5;
+document.body.appendChild(renderer.domElement); //let geometry: BoxGeometry = new BoxGeometry(1, 1, 1);
+//let material: MeshBasicMaterial = new MeshBasicMaterial({color : 0x00ff00});
+//let cube : Mesh = new Mesh(geometry,material);
+
+let ebene = new ebene_1.Ebene();
+let cylinder = ebene.cylinder;
+scene.add(this.cylinder);
+scene.add(cylinder);
+camera.position.z = 4;
+camera.position.y = 3;
 
 let animate = function () {
   requestAnimationFrame(animate);
-  cube.rotation.x += 0.01;
-  cube.rotation.y += 0.01;
+  cylinder.rotation.x += 0;
+  cylinder.rotation.y += 0.01; //cylinder.position.z += 0.01;
+
   renderer.render(scene, camera);
 };
 
 animate();
-let ebene = new ebene_1.Ebene(12);
 },{"three":"../node_modules/three/build/three.module.js","./ebene":"game/ebene.ts"}],"../node_modules/parcel/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -33285,7 +33298,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "16561" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "36459" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
