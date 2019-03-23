@@ -14,6 +14,22 @@ renderer.setSize(window.innerWidth, window.innerHeight);
 
 document.body.appendChild(renderer.domElement);
 
+let geometry: BoxGeometry = new BoxGeometry(1, 1, 1);
+let material: MeshBasicMaterial = new MeshBasicMaterial({color : 0x00ff00});
+let cube : Mesh = new Mesh(geometry,material);
+
+camera.position.x = 0;
+camera.position.y = 100;
+camera.position.z = 200;
+
+let ebene: Ebene = new Ebene();
+scene.add(ebene.cylinder);
+
+let animate = function() {
+    requestAnimationFrame(animate);
+    renderer.render ( scene,camera);
+};
+animate();
 camera.position.z = 35;
 let pointLight = new PointLight(0xFFFFFF);
 

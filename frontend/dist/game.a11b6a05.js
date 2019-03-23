@@ -33203,12 +33203,17 @@ exports.SceneUtils = SceneUtils;
 function LensFlare() {
   console.error('THREE.LensFlare has been moved to /examples/js/objects/Lensflare.js');
 }
+<<<<<<< HEAD
 },{}],"game/enums/player-status.enum.ts":[function(require,module,exports) {
+=======
+},{}],"game/ebene.ts":[function(require,module,exports) {
+>>>>>>> game-map
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+<<<<<<< HEAD
 var PlayerStatusEnum;
 
 (function (PlayerStatusEnum) {
@@ -33309,10 +33314,21 @@ class Player {
 
   set status(value) {
     this._status = value;
+=======
+
+class Ebene {
+  constructor(a) {
+    this.a = a;
+  }
+
+  eineMethode() {
+    return 4;
+>>>>>>> game-map
   }
 
 }
 
+<<<<<<< HEAD
 exports.Player = Player;
 },{"three":"../node_modules/three/build/three.module.js","./enums/player-status.enum":"game/enums/player-status.enum.ts"}],"game/Hurdle.ts":[function(require,module,exports) {
 "use strict";
@@ -33342,6 +33358,10 @@ class Hurdle {
 
 exports.Hurdle = Hurdle;
 },{"three":"../node_modules/three/build/three.module.js"}],"game/index.ts":[function(require,module,exports) {
+=======
+exports.Ebene = Ebene;
+},{}],"game/index.ts":[function(require,module,exports) {
+>>>>>>> game-map
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -33350,6 +33370,7 @@ Object.defineProperty(exports, "__esModule", {
 
 const three_1 = require("three");
 
+<<<<<<< HEAD
 const player_1 = require("./player");
 
 const Hurdle_1 = require("./Hurdle");
@@ -33387,14 +33408,42 @@ let animate = function () {
   winkel += drehWert; // player.body.rotation.x += drehWert;
 
   player.body.rotation.y += drehWert;
+=======
+const ebene_1 = require("./ebene");
+
+if (module.hot) module.hot.dispose(() => location.reload());
+console.log('%cApplicaction WORKS!', 'color:lightgreen');
+let scene = new three_1.Scene();
+let camera = new three_1.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+let renderer = new three_1.WebGLRenderer();
+renderer.setSize(window.innerWidth, window.innerHeight);
+document.body.appendChild(renderer.domElement);
+let geometry = new three_1.BoxGeometry(1, 1, 1);
+let material = new three_1.MeshBasicMaterial({
+  color: 0x00ff00
+});
+let cube = new three_1.Mesh(geometry, material);
+scene.add(cube);
+camera.position.z = 5;
+
+let animate = function () {
+  requestAnimationFrame(animate);
+  cube.rotation.x += 0.01;
+  cube.rotation.y += 0.01;
+>>>>>>> game-map
   renderer.render(scene, camera);
 };
 
 animate();
+<<<<<<< HEAD
 window.addEventListener('keydown', e => {
   player.jump();
 });
 },{"three":"../node_modules/three/build/three.module.js","./player":"game/player.ts","./Hurdle":"game/Hurdle.ts"}],"../node_modules/parcel/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+=======
+let ebene = new ebene_1.Ebene(12);
+},{"three":"../node_modules/three/build/three.module.js","./ebene":"game/ebene.ts"}],"../node_modules/parcel/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+>>>>>>> game-map
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -33422,7 +33471,11 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
+<<<<<<< HEAD
   var ws = new WebSocket(protocol + '://' + hostname + ':' + "33359" + '/');
+=======
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "16561" + '/');
+>>>>>>> game-map
 
   ws.onmessage = function (event) {
     checkedAssets = {};
