@@ -7,8 +7,8 @@ export class Ebene {
     private _cylinder;
 
     public constructor() {
-        this.ebene = new CylinderGeometry(2, 2, 1, 8, 1);
-        this.ebene.applyMatrix(new Matrix4().makeRotationX(-Math.PI / 2));
+        this.ebene = new CylinderGeometry(3,3,2,20,10);
+        //this.ebene.applyMatrix(new Matrix4().makeRotationX(-Math.PI/2));
 
         this.material = new MeshBasicMaterial({
             color: 0x68c3c0,
