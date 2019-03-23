@@ -34,6 +34,12 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.file-request-popover>:not(:first-child){
+    display: none;
 }
 
 .file-drop-zone{

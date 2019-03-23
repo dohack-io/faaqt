@@ -1,4 +1,5 @@
 import '../../static/stylesheets/drop-style.css';
+import { FileGetter } from './file-getter';
 
 class AudioAnalyzer {
     constructor() {
@@ -13,7 +14,7 @@ const createDropZone = () => {
     dzw.innerHTML = `
     <div class="file-request-popover">
         <div>
-            <h1>Drop your File here</h1>
+            <h1>Drop your file here</h1>
             <div class="file-drop-zone"></div>
         </div>
         <hr />
@@ -22,11 +23,17 @@ const createDropZone = () => {
     `;
 
     document.body.append(dzw);
+
+    return dzw;
 }
 
 const intialize = () => {
     // new AudioAnalyzer();
-    createDropZone();
+    const dropZoneWrapper = createDropZone();
+    const fileGetter = new FileGetter(dropZoneWrapper);
+    fileGetter.gotFiles = (ev) => {
+        console.log("got files", ev);
+    }
 }
 
 
