@@ -33241,10 +33241,9 @@ Object.defineProperty(exports, "__esModule", {
 const three_1 = require("three");
 
 const ebene_1 = require("./ebene"); //import {Player} from "./Hurdle";
-//if (module.hot)
-//   module.hot.dispose(() => location.reload());
 
 
+if (module.hot) module.hot.dispose(() => location.reload());
 console.log('%cApplicaction WORKS!', 'color:lightgreen');
 let scene = new three_1.Scene();
 let camera = new three_1.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
@@ -33298,7 +33297,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "36459" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "16561" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
