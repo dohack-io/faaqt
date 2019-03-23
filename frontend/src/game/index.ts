@@ -1,35 +1,69 @@
 // please don't remove
-import {BoxGeometry, Mesh, MeshBasicMaterial, PerspectiveCamera, Scene, WebGLRenderer} from 'three';
+import {BoxGeometry, Mesh, MeshBasicMaterial, PerspectiveCamera, PointLight, Scene, WebGLRenderer} from 'three';
+import {Player} from './player';
+import {Hurdle} from './Hurdle';
 import {Ebene} from './ebene';
+//import {Player} from "./Hurdle";
 
-if (module.hot)
-    module.hot.dispose(() => location.reload());
-
-console.log('%cApplicaction WORKS!', 'color:lightgreen');
+//if (module.hot)
+ //   module.hot.dispose(() => location.reload());
 
 let scene: Scene = new Scene();
-let camera =  new PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
+let camera = new PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 100);
 let renderer = new WebGLRenderer();
+
 renderer.setSize(window.innerWidth, window.innerHeight);
 
 document.body.appendChild(renderer.domElement);
 
-let geometry: BoxGeometry = new BoxGeometry(1, 1, 1);
-let material: MeshBasicMaterial = new MeshBasicMaterial({color : 0x00ff00});
-let cube : Mesh = new Mesh(geometry,material);
-scene.add(cube);
-camera.position.z = 5;
-let animate = function() {
-    requestAnimationFrame(animate);
-    cube.rotation.x += 0.01;
-    cube.rotation.y += 0.01;
+//let geometry: BoxGeometry = new BoxGeometry(1, 1, 1);
+//let material: MeshBasicMaterial = new MeshBasicMaterial({color : 0x00ff00});
+//let cube : Mesh = new Mesh(geometry,material);
 
+
+
+camera.position.z = 35;
+
+// Objekte erstellen
+let ebene: Ebene = new Ebene();
+let cylinder = ebene.cylinder;
+scene.add(this.cylinder);
+scene.add(cylinder);
+camera.position.z = 4;
+camera.position.y = 3;
+let player: Player = new Player();
+let hurdle: Hurdle = new Hurdle();
+hurdle.body.position.x = 2.5;
+
+// add to the scene
+scene.add(ebene.cylinder);
+// scene.add(player.body);
+// scene.add(hurdle.body);
+
+let winkel = 0;
+let drehWert = 0.1;
+let animate = function () {
+    requestAnimationFrame(animate);
+    cylinder.rotation.x += 0;
+    cylinder.rotation.y += 0.01;
+    //cylinder.position.z += 0.01;
     renderer.render ( scene,camera);
 };
 animate();
 
+    if (winkel >= 1 || winkel == 0) {
+        drehWert = (-1) * drehWert;
+    }
+    winkel += drehWert;
 
-let ebene: Ebene = new Ebene(12);
+    // player.body.rotation.x += drehWert;
+    player.body.rotation.y += drehWert;
 
+    renderer.render(scene, camera);
 
+};
+animate();
 
+window.addEventListener('keydown', (e) => {
+        player.jump();
+});
