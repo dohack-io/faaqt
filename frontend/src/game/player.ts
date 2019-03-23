@@ -32,25 +32,31 @@ export class Player {
         // if (this.status == PlayerStatusEnum.JUMPING)
         //     return;
 
-        this._status = PlayerStatusEnum.JUMPING;
         let direction = true;
         let id;
+        if (this._status == PlayerStatusEnum.JUMPING)
+            return;
+
         let doJump = () => {
             if (this._body.position.y >= this._jumpHeight) {
                 direction = false;
                 console.log("direction false");
             }
+
             if (direction && this._body.position.y <= this._jumpHeight) {
+                this._status = PlayerStatusEnum.JUMPING;
                 this._body.position.y += 0.1;
                 console.log("up");
                 id = requestAnimationFrame(doJump);
 
             } else if (!direction && this._body.position.y >= 0) {
+                this._status = PlayerStatusEnum.JUMPING;
                 console.log("down");
                 this._body.position.y -= 0.1;
                 id = requestAnimationFrame(doJump);
 
             } else {
+                this._status = PlayerStatusEnum.RUNNING;
                 console.log("ende");
                 cancelAnimationFrame(id);
                 this._body.position.y = 0;
