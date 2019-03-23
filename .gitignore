@@ -4,3 +4,5 @@
 frontend/dist/
 
 frontend/\.cache/
+
+frontend/node_modules

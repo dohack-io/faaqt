@@ -25,13 +25,12 @@ let ebene: Ebene = new Ebene();
 let cylinder = ebene.cylinder;
 scene.add(this.cylinder);
 scene.add(cylinder);
-camera.position.z = 4;
-camera.position.y = 3;
+camera.position.z = 20;
+//camera.position.y = 3;
 
 let animate = function() {
     requestAnimationFrame(animate);
-    cylinder.rotation.x += 0;
-    cylinder.rotation.y += 0.01;
+    //cylinder.rotation.z += 0.01;
     //cylinder.position.z += 0.01;
     renderer.render ( scene,camera);
 };

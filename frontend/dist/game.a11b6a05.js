@@ -33214,7 +33214,7 @@ const three_1 = require("three");
 
 class Ebene {
   constructor() {
-    this.ebene = new three_1.CylinderGeometry(3, 3, 2, 20, 10); //this.ebene.applyMatrix(new Matrix4().makeRotationX(-Math.PI/2));
+    this.ebene = new three_1.PlaneGeometry(200, 2, 2); //this.ebene.applyMatrix(new Matrix4().makeRotationX(-Math.PI/2));
 
     this.material = new three_1.MeshBasicMaterial({
       color: 0x68c3c0,
@@ -33222,6 +33222,7 @@ class Ebene {
       opacity: .6
     });
     this._cylinder = new three_1.Mesh(this.ebene, this.material);
+    this.cylinder.position.y = -15;
   }
 
   get cylinder() {
@@ -33257,13 +33258,11 @@ let ebene = new ebene_1.Ebene();
 let cylinder = ebene.cylinder;
 scene.add(this.cylinder);
 scene.add(cylinder);
-camera.position.z = 4;
-camera.position.y = 3;
+camera.position.z = 20; //camera.position.y = 3;
 
 let animate = function () {
-  requestAnimationFrame(animate);
-  cylinder.rotation.x += 0;
-  cylinder.rotation.y += 0.01; //cylinder.position.z += 0.01;
+  requestAnimationFrame(animate); //cylinder.rotation.z += 0.01;
+  //cylinder.position.z += 0.01;
 
   renderer.render(scene, camera);
 };
@@ -33297,7 +33296,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "16561" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "30059" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
