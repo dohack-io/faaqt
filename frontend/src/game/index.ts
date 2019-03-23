@@ -1,35 +1,68 @@
 // please don't remove
-import {BoxGeometry, Mesh, MeshBasicMaterial, PerspectiveCamera, Scene, WebGLRenderer} from 'three';
-import {Ebene} from './ebene';
+import {
+    AmbientLight,
+    BoxGeometry,
+    DirectionalLight,
+    Fog,
+    Mesh,
+    MeshBasicMaterial,
+    PerspectiveCamera, PointLight,
+    Scene,
+    WebGLRenderer
+} from 'three';
+import {Player} from './player';
+import {Hurdle} from './Hurdle';
 
 if (module.hot)
     module.hot.dispose(() => location.reload());
 
-console.log('%cApplicaction WORKS!', 'color:lightgreen');
-
 let scene: Scene = new Scene();
-let camera =  new PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
+let camera =  new PerspectiveCamera(45, window.innerWidth/window.innerHeight, 0.1, 100);
 let renderer = new WebGLRenderer();
+
 renderer.setSize(window.innerWidth, window.innerHeight);
 
 document.body.appendChild(renderer.domElement);
 
-let geometry: BoxGeometry = new BoxGeometry(1, 1, 1);
-let material: MeshBasicMaterial = new MeshBasicMaterial({color : 0x00ff00});
-let cube : Mesh = new Mesh(geometry,material);
-scene.add(cube);
-camera.position.z = 5;
+camera.position.z = 35;
+let pointLight = new PointLight(0xFFFFFF);
+
+// set its position
+pointLight.position.x = 0.1;
+pointLight.position.y = 0.1;
+pointLight.position.z = 0.1;
+
+// Objekte erstellen
+let player: Player = new Player();
+let hurdle: Hurdle = new Hurdle();
+hurdle.body.position.x = 2.5;
+// add to the scene
+scene.add(pointLight);
+scene.add(player.body);
+scene.add(hurdle.body);
+
+let winkel = 0;
+let drehWert = 0.1;
 let animate = function() {
     requestAnimationFrame(animate);
-    cube.rotation.x += 0.01;
-    cube.rotation.y += 0.01;
 
-    renderer.render ( scene,camera);
+    if (winkel >= 1 || winkel == 0) {
+        drehWert = (-1) * drehWert;
+    }
+    winkel += drehWert;
+
+    // player.body.rotation.x += drehWert;
+    player.body.rotation.y += drehWert;
+
+    renderer.render (scene,camera);
+
 };
 animate();
 
-
-let ebene: Ebene = new Ebene(12);
-
-
-
+window.addEventListener('keydown', (e) => {
+    let spacebar = " ";
+    console.log(e.key);
+    if (e.key == spacebar) {
+        player.jump();
+    }
+});

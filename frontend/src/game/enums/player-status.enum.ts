@@ -1,3 +1,4 @@
-export enum PlayerEnum {
-    JUMPING
+export enum PlayerStatusEnum {
+    RUNNING,
+    JUMPING,
 }

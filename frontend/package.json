@@ -24,9 +24,13 @@
   },
   "homepage": "https://github.com/shiro0x00/faaqt#readme",
   "dependencies": {
+    "@types/createjs": "0.0.29",
     "@types/three": "^0.93.28",
+    "@types/tweenjs": "^1.0.0",
+    "createjs": "^1.0.1",
     "parcel": "^1.12.3",
     "three": "^0.102.1",
+    "tweenjs": "^1.0.2",
     "typescript": "^3.3.4000"
   },
   "devDependencies": {
