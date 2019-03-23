@@ -8,6 +8,7 @@ export class Ebene {
     private ebene;
     private material;
     private _cylinder;
+    public static readonly Y_VALUE = -6.35;
 
     public constructor() {
         this.ebene = new PlaneGeometry(200,2,2);

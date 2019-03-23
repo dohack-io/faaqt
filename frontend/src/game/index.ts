@@ -6,10 +6,10 @@ import {Ebene} from './ebene';
 //import {Player} from "./Hurdle";
 
 if (module.hot)
-  module.hot.dispose(() => location.reload());
+    module.hot.dispose(() => location.reload());
 
 let scene: Scene = new Scene();
-let camera = new PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 100);
+let camera = new PerspectiveCamera(45, window.innerWidth * 0.5 / window.innerHeight * 0.5, 0.1, 100);
 let renderer = new WebGLRenderer();
 
 renderer.setSize(window.innerWidth, window.innerHeight);
@@ -26,13 +26,19 @@ camera.position.z = 20;
 // Objekte erstellen
 let ebene: Ebene = new Ebene();
 let player: Player = new Player();
-let hurdle: Hurdle = new Hurdle();
-hurdle.body.position.x = 2.5;
-
-// add to the scene
-scene.add(ebene.cylinder);
 scene.add(player.body);
-scene.add(hurdle.body);
+scene.add(ebene.cylinder);
+
+let hurdles: Hurdle[] = [];
+
+for (let i = 1; i <= 20; i++) {
+    hurdles[i] = new Hurdle();
+    scene.add(hurdles[i].body);
+    hurdles[i].body.position.x = 2.5 * i;
+    hurdles[i].body.position.y = -6.35;
+
+}
+// add to the scene
 
 let winkel = 0;
 let drehWert = 0.1;
@@ -47,8 +53,15 @@ let animate = function () {
     player.body.rotation.y += drehWert;
 
     renderer.render(scene, camera);
+    camera.position.x += 0.01;
+    player.body.position.x += 0.01;
 };
 animate();
+
+// let movecamera = () => {
+//     for (let i = 0; i < 200; i++) {
+//     }
+// }
 
 window.addEventListener('keydown', (e) => {
     player.jump();
