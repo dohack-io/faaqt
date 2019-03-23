@@ -24,6 +24,7 @@
   },
   "homepage": "https://github.com/shiro0x00/faaqt#readme",
   "dependencies": {
+    "@types/three": "^0.93.28",
     "parcel": "^1.12.3",
     "three": "^0.102.1",
     "typescript": "^3.3.4000"
