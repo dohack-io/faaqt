@@ -1,4 +1,4 @@
-import '../audio-analyzer/audio-analyzer.ts';
+import '../audio-analyzer/base';
 
 // please don't remove
 if (module.hot)

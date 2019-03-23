@@ -1,44 +1,43 @@
-import '../../static/stylesheets/drop-style.css';
-import { FileGetter } from './file-getter';
+const loadFile = (file: File) => new Promise<ArrayBuffer>((res, rej) => {
+    const fileReader = new FileReader();
+    fileReader.addEventListener('error', rej);
+    fileReader.addEventListener('loadend', ev => {
+        const result = fileReader.result
+        if (!(result instanceof ArrayBuffer))
+            rej(new Error('could not correctly load data'));
+        else
+            res(result);
+    });
 
-class AudioAnalyzer {
-    constructor() {
-        console.log('%cThis is AudioAnalylzer', 'color:orange');
+    fileReader.readAsArrayBuffer(file);
+})
+
+const createBufferSourceNodeFromFile = async (audioContext: AudioContext, file: File) => {
+    const fileContent = await loadFile(file);
+
+    const dec = await audioContext.decodeAudioData(fileContent);
+    const buffer = audioContext.createBufferSource();
+    buffer.buffer = dec;
+
+    return buffer;
+};
+
+
+export class AudioAnalyzer {
+    constructor(private readonly file: File) {
+        console.log('%cThis is AudioAnalylzer with file', 'color:orange', file);
+        this.intialize().then(nodes => {
+            console.log("this were the nodes", ...nodes);
+        })
+    }
+
+    async intialize() {
+        const audioCtx = new AudioContext();
+
+        const bufferNode = await createBufferSourceNodeFromFile(audioCtx, this.file);
+        const analyserNode = audioCtx.createAnalyser();
+
+        bufferNode.connect(analyserNode);
+        return [bufferNode, analyserNode];
     }
 }
-
-const createDropZone = () => {
-    const dzw = document.createElement('div');
-    dzw.className = "full-overlay";
-
-    dzw.innerHTML = `
-    <div class="file-request-popover">
-        <div>
-            <h1>Drop your file here</h1>
-            <div class="file-drop-zone"></div>
-        </div>
-        <hr />
-        <input id="file-choose-dialog" type="file" />
-    </div>
-    `;
-
-    document.body.append(dzw);
-
-    return dzw;
-}
-
-const intialize = () => {
-    // new AudioAnalyzer();
-    const dropZoneWrapper = createDropZone();
-    const fileGetter = new FileGetter(dropZoneWrapper);
-    fileGetter.gotFiles = (ev) => {
-        console.log("got files", ev);
-    }
-}
-
-
-
-if (document.readyState == 'loading')
-    document.addEventListener('DOMContentLoaded', intialize);
-else
-    intialize();
