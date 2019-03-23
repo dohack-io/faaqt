@@ -1,7 +1,8 @@
 // please don't remove
-import {PerspectiveCamera, PointLight, Scene, WebGLRenderer} from 'three';
+import {BoxGeometry, Mesh, MeshBasicMaterial, PerspectiveCamera, PointLight, Scene, WebGLRenderer} from 'three';
 import {Player} from './player';
 import {Hurdle} from './Hurdle';
+import {Ebene} from './ebene';
 
 if (module.hot)
     module.hot.dispose(() => location.reload());
@@ -22,30 +23,19 @@ camera.position.x = 0;
 camera.position.y = 100;
 camera.position.z = 200;
 
-let ebene: Ebene = new Ebene();
-scene.add(ebene.cylinder);
 
-let animate = function() {
-    requestAnimationFrame(animate);
-    renderer.render ( scene,camera);
-};
-animate();
 camera.position.z = 35;
-let pointLight = new PointLight(0xFFFFFF);
-
-// set its position
-pointLight.position.x = 0.1;
-pointLight.position.y = 0.1;
-pointLight.position.z = 0.1;
 
 // Objekte erstellen
+let ebene: Ebene = new Ebene();
 let player: Player = new Player();
 let hurdle: Hurdle = new Hurdle();
 hurdle.body.position.x = 2.5;
+
 // add to the scene
-scene.add(pointLight);
-scene.add(player.body);
-scene.add(hurdle.body);
+scene.add(ebene.cylinder);
+// scene.add(player.body);
+// scene.add(hurdle.body);
 
 let winkel = 0;
 let drehWert = 0.1;
