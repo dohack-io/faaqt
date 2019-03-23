@@ -17,19 +17,19 @@ document.body.appendChild(renderer.domElement);
 let geometry: BoxGeometry = new BoxGeometry(1, 1, 1);
 let material: MeshBasicMaterial = new MeshBasicMaterial({color : 0x00ff00});
 let cube : Mesh = new Mesh(geometry,material);
-scene.add(cube);
-camera.position.z = 5;
+
+camera.position.x = 0;
+camera.position.y = 100;
+camera.position.z = 200;
+
+let ebene: Ebene = new Ebene();
+scene.add(ebene.cylinder);
+
 let animate = function() {
     requestAnimationFrame(animate);
-    cube.rotation.x += 0.01;
-    cube.rotation.y += 0.01;
-
     renderer.render ( scene,camera);
 };
 animate();
-
-
-let ebene: Ebene = new Ebene(12);
 
 
 

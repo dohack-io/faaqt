@@ -1,11 +1,31 @@
+import {CylinderGeometry, FlatShading, Matrix4, Mesh, MeshBasicMaterial, MeshPhongMaterial} from "three";
+
+
 export class Ebene {
 
-    public constructor(private a: number) {
+    private ebene;
+    private material;
+    private _cylinder;
+
+
+    public constructor() {
+        this.ebene = new CylinderGeometry(2,2,1,8,1);
+        this.ebene.applyMatrix(new Matrix4().makeRotationX(-Math.PI/2));
+
+        this.material = new MeshBasicMaterial({
+            color:0x68c3c0,
+            transparent:0x23190f,
+            opacity:.6,
+
+        });
+
+        this._cylinder = new Mesh(this.ebene,this.material);
 
     }
 
-    eineMethode(): number {
-
-        return 4;
+    get cylinder() {
+        return this._cylinder;
     }
+
+
 }

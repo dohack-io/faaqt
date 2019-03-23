@@ -93,6 +93,21 @@
     <option name="width" value="683" />
     <option name="height" value="743" />
   </component>
+  <component name="MavenProjectNavigator">
+    <treeState>
+      <expand />
+      <select />
+    </treeState>
+  </component>
+  <component name="NodeModulesDirectoryManager">
+    <handled-path value="$PROJECT_DIR$/frontend/node_modules" />
+    <handled-path value="$PROJECT_DIR$/node_modules" />
+  </component>
+  <component name="ProjectFrameBounds" extendedState="4">
+    <option name="y" value="25" />
+    <option name="width" value="683" />
+    <option name="height" value="743" />
+  </component>
   <component name="ProjectView">
     <navigator currentView="ProjectPane" proportions="" version="1">
       <flattenPackages />
@@ -118,6 +133,35 @@
               <item name="faaqt" type="b2602c69:ProjectViewProjectNode" />
               <item name="faaqt" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="faaqt" type="b2602c69:ProjectViewProjectNode" />
+              <item name="faaqt" type="462c0819:PsiDirectoryNode" />
+              <item name=".idea" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="faaqt" type="b2602c69:ProjectViewProjectNode" />
+              <item name="faaqt" type="462c0819:PsiDirectoryNode" />
+              <item name=".idea" type="462c0819:PsiDirectoryNode" />
+              <item name="inspectionProfiles" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="faaqt" type="b2602c69:ProjectViewProjectNode" />
+              <item name="faaqt" type="462c0819:PsiDirectoryNode" />
+              <item name="frontend" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="faaqt" type="b2602c69:ProjectViewProjectNode" />
+              <item name="faaqt" type="462c0819:PsiDirectoryNode" />
+              <item name="frontend" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="faaqt" type="b2602c69:ProjectViewProjectNode" />
+              <item name="faaqt" type="462c0819:PsiDirectoryNode" />
+              <item name="frontend" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="game" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
@@ -126,12 +170,15 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
+    <property name="settings.editor.selected.configurable" value="Errors" />
+    <property name="nodejs_interpreter_path" value="/usr/bin/node" />
+    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.0" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1553341697478" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
-    <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+    <property name="typescript-compiler-editor-notification" value="false" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -236,12 +283,12 @@
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="d1f6fd2c-ce72-4ca5-9000-6537c895aa8b" name="Default Changelist" comment="" />
-      <created>1553341489622</created>
+      <changelist id="9927ae99-5cf7-4b54-847e-4b1c29923edc" name="Default" comment="" />
+      <created>1553341518508</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1553341489622</updated>
-      <workItem from="1553341491140" duration="201000" />
+      <updated>1553341518508</updated>
+      <workItem from="1553341519947" duration="12011000" />
     </task>
     <servers />
   </component>
