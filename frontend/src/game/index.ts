@@ -26,14 +26,7 @@ let length = pufferEbene + mockData.length;
 // Objekte erstellen
 let ebene: Ebene = new Ebene(length);
 let player: Player = new Player();
-let backgroundGeometry = new PlaneGeometry(window.innerWidth, window.innerHeight);
-let backgroundMaterial = new MeshBasicMaterial({color: 0xffffff});
-let background = new Mesh(backgroundGeometry, backgroundMaterial);
 
-// Initiale Koordinaten setzen
-background.position.x = 0;
-background.position.y = 0;
-background.position.z = -5;
 
 player.body.position.y = Ebene.Y_VALUE;
 player.body.position.x = -pufferEbene;

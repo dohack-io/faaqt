@@ -1,7 +1,11 @@
-import { Scene, PerspectiveCamera, WebGLRenderer } from "three";
+import { Scene, PerspectiveCamera, WebGLRenderer, MeshBasicMaterial } from "three";
 import { Ebene } from "./ebene";
 import { Player } from "./player";
 import { Hurdle } from "./Hurdle";
+import {PlaneGeometry} from "three";
+import {Mesh} from "three";
+import {SpotLight} from "three";
+import {HemisphereLight} from "three";
 
 export interface GameData {
     hurdles: Hurdle[],
@@ -28,6 +32,21 @@ export class GameView {
 
         this.camera.position.z = 18;
         this.camera.position.y = 7;
+
+        let backgroundGeometry = new PlaneGeometry(window.innerWidth, window.innerHeight);
+        let backgroundMaterial = new MeshBasicMaterial({color: 0xffffff});
+        let background = new Mesh(backgroundGeometry, backgroundMaterial);
+
+        // Initiale Koordinaten setzen
+        background.position.x = 0;
+        background.position.y = 0;
+        background.position.z = -1;
+
+        let light = new HemisphereLight( 0xcc0000, 0x080820, 0.4 );
+
+        this.scene.add(background);
+        this.scene.add(light);
+
 
         wrapper.appendChild(this.renderer.domElement);
     }

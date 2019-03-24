@@ -1,4 +1,5 @@
 import {Group, Mesh, MeshBasicMaterial, PlaneGeometry} from "three";
+import {MeshPhongMaterial} from "three";
 
 
 export class Ebene {
@@ -18,7 +19,7 @@ export class Ebene {
 
         //this.ebene.applyMatrix(new Matrix4().makeRotationX(-Math.PI/2));
 
-        this._ebeneMaterial = new MeshBasicMaterial({
+        this._ebeneMaterial = new MeshPhongMaterial({
             color: 0x68c3c0,
             opacity: .6,
         });
