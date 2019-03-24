@@ -23,24 +23,24 @@ const createDropZone = () => {
 }
 
 const gotFileAnalyzer = (aa: AudioAnalyzer) => {
-    console.log('got an audio analyzer', aa);
+    console.log('TEST', aa.createSpikeArray(100, 0.25)
+        .map(v => v ? 'X' : '_').join(''));
 }
 
 const intialize = () => {
-
-
     const dropZoneWrapper = createDropZone();
     const fileGetter = new FileGetter(dropZoneWrapper);
 
     fileGetter.gotFiles = (ev) => {
-        const aas = ev.map(file => new AudioAnalyzer(file));
+        const aas = ev.map(file => AudioAnalyzer.createFromFile(file));
 
         for (const aa of aas)
-            gotFileAnalyzer(aa);
+            aa.then(gotFileAnalyzer);
     }
+
+    AudioAnalyzer.createFromUrl('./kiro-new-world.mp3')
+        .then(aa => gotFileAnalyzer(aa));
 }
-
-
 
 if (document.readyState == 'loading')
     document.addEventListener('DOMContentLoaded', intialize);

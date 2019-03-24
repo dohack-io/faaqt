@@ -49,5 +49,6 @@
 .file-drop-zone{
     width: 80%;
     border: 4px dashed orange;
-    height: 400px;
+    /* height: 400px; */
+    flex-grow: 1;
 }

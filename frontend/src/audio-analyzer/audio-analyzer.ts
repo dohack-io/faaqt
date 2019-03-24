@@ -12,32 +12,98 @@ const loadFile = (file: File) => new Promise<ArrayBuffer>((res, rej) => {
     fileReader.readAsArrayBuffer(file);
 })
 
-const createBufferSourceNodeFromFile = async (audioContext: AudioContext, file: File) => {
-    const fileContent = await loadFile(file);
+const createBufferSourceNodeFromArrayBuffer = async (audioContext: AudioContext, buffer: ArrayBuffer) => {
+    console.log('buffer', buffer);
+    const dec = await audioContext.decodeAudioData(buffer);
+    const decBuffer = dec.getChannelData(0);
+    console.log(decBuffer.slice(3000000, 3000100));
+    const bufferNode = audioContext.createBufferSource();
+    bufferNode.buffer = dec;
 
-    const dec = await audioContext.decodeAudioData(fileContent);
-    const buffer = audioContext.createBufferSource();
-    buffer.buffer = dec;
-
-    return buffer;
+    return bufferNode;
 };
 
 
 export class AudioAnalyzer {
-    constructor(private readonly file: File) {
-        console.log('%cThis is AudioAnalylzer with file', 'color:orange', file);
-        this.intialize().then(nodes => {
-            console.log("this were the nodes", ...nodes);
-        })
+    private buffer: ArrayBuffer;
+
+    private audioContext: AudioContext;
+    private bufferNode: AudioBufferSourceNode;
+    private analyserNode: AnalyserNode;
+
+    private decodedAudioData: AudioBuffer;
+    private firstChannel: Float32Array;
+
+    static async createFromFile(file: File): Promise<AudioAnalyzer> {
+        const buffer = await loadFile(file);
+        return AudioAnalyzer.createAudioAnalyzerFromArrayBuffer(buffer);
     }
 
-    async intialize() {
-        const audioCtx = new AudioContext();
+    static async createFromUrl(url: string): Promise<AudioAnalyzer> {
+        const fetched = await fetch(url);
+        const bodyAsArrayBuffer = await fetched.arrayBuffer();
+        return AudioAnalyzer.createAudioAnalyzerFromArrayBuffer(bodyAsArrayBuffer);
+    }
 
-        const bufferNode = await createBufferSourceNodeFromFile(audioCtx, this.file);
+    private static async createAudioAnalyzerFromArrayBuffer(buffer: ArrayBuffer) {
+        const aa = new AudioAnalyzer();
+        aa.buffer = buffer;
+
+        const audioCtx = aa.audioContext = new AudioContext();
+
+        const decodedAudioData = await audioCtx.decodeAudioData(buffer);
+        const firstChannel = Float32Array.from(decodedAudioData.getChannelData(0))
+
+        const bufferNode = audioCtx.createBufferSource();
+        bufferNode.buffer = decodedAudioData;
+
         const analyserNode = audioCtx.createAnalyser();
 
         bufferNode.connect(analyserNode);
-        return [bufferNode, analyserNode];
+        analyserNode.connect(analyserNode.context.destination);
+
+        aa.decodedAudioData = decodedAudioData;
+        aa.firstChannel = firstChannel;
+        aa.bufferNode = bufferNode;
+        aa.analyserNode = analyserNode;
+
+        console.log(aa.decodedAudioData)
+        return aa;
+    }
+
+    // constructor() {}
+
+    getSample(at: number) {
+        // console.log('firstChannel', this.firstChannel);
+        // const spectrumSize = this.analyserNode.frequencyBinCount;
+        // const spectrum = new Uint8Array(spectrumSize);
+        // this.analyserNode.getByteFrequencyData(spectrum);
+        // return spectrum;
+
+        const dad = this.decodedAudioData;
+        let arrayPosition = Math.floor(dad.length * at / (1000 * dad.duration));
+        // console.log('arrayPosition', dad.length, arrayPosition);
+        if (arrayPosition < 0)
+            return null;
+        else if (arrayPosition >= dad.length)
+            return null;
+
+        // console.log('this.firstChannel[' + arrayPosition + ']', this.firstChannel[arrayPosition]);
+        // console.log('this.firstChannel', this.firstChannel.slice(0, 10));
+        return this.firstChannel[arrayPosition];
+    }
+
+    createSamples(speed: number) {
+        let ts = 0;
+        let sample;
+        let ret = [];
+        while (sample = this.getSample(ts), ts += speed, sample != null)
+            ret.push(sample);
+
+        return ret;
+    }
+
+    createSpikeArray(speed = 100, treshhold = 0.25) {
+        return this.createSamples(speed).map(v => v > treshhold);
     }
 }
