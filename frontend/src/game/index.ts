@@ -1,3 +1,5 @@
+import '../audio-analyzer/base';
+
 // please don't remove
 import {Mesh, MeshBasicMaterial, Object3D} from 'three';
 import {checkHitStatus} from './hit-status-check';
