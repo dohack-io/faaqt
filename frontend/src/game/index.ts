@@ -1,16 +1,19 @@
+import { Mesh, MeshBasicMaterial, Object3D } from 'three';
+
 // please don't remove
 import { PerspectiveCamera, Scene, WebGLRenderer, Mesh, MeshBasicMaterial, Object3D, PlaneGeometry } from 'three';
 import { Player } from './player';
 import { Hurdle } from './Hurdle';
 import { Ebene } from './ebene';
 import { checkHitStatus } from './hit-status-check';
+import { GameView, GameData } from './game-view';
+import { Hurdle } from './Hurdle';
 
+// please don't remove
 if (module.hot)
     module.hot.dispose(() => location.reload());
 
-let scene: Scene = new Scene();
-let camera = new PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 100);
-let renderer = new WebGLRenderer();
+const gameView = new GameView(document.body);
 
 renderer.setSize(window.innerWidth, window.innerHeight);
 
@@ -77,41 +80,39 @@ const getMeshFromGroup = (group: Object3D) => {
     return playerBody.material as MeshBasicMaterial;
 };
 
+let gameData: null | GameData = null;
+
+gameData = gameView.setLevel([
+    false, true, true, false, true
+]);
+
 function animate(timestamp) {
     requestAnimationFrame(animate);
     const diff = timestamp - last;
     last = timestamp;
 
-    // camera.position.x += diff / 500;
-    // player.body.position.x += diff / 500;
+    if (gameData !== null) {
+        const result = checkHitStatus(gameData.player.body, gameData.hurdles.map(h => h.body));
 
-    const result = checkHitStatus(player.body, hurdles.map(h => h.body));
-    const playerMeshMeterial = getMeshFromGroup(player.body);
+        gameView.moveLevel(diff / 500);
 
-    // camera.position.x += 0.01;
-    // player.body.position.x += 0.01 ;
-    // ebene.body.position.x -= diff / 400;
+        const playerMeshMeterial = getMeshFromGroup(gameData.player.body);
     if (result)
         playerMeshMeterial.color.setRGB(1, 0.2, 0);
     else
         playerMeshMeterial.color.setHex(0xf2a2e8);
 
-
-    renderer.render(scene, camera);
+        gameView.render();
+    }
 };
 ebene.body.position.x = 0;
-
 
 requestAnimationFrame(timestamp => {
     last = timestamp;
     requestAnimationFrame(animate);
 });
 
-// let movecamera = () => {
-//     for (let i = 0; i < 200; i++) {
-//     }
-// }
-
 window.addEventListener('keydown', (e) => {
-    player.jump();
+    if (e.key == ' ')
+        gameView.jump();
 });
