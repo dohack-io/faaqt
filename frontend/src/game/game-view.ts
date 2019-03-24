@@ -42,7 +42,7 @@ export class GameView {
         background.position.y = 0;
         background.position.z = -1;
 
-        let light = new HemisphereLight( 0xcc0000, 0x080820, 0.4 );
+        let light = new HemisphereLight( 0xcc0000, 0x080820, 1 );
 
         this.scene.add(background);
         this.scene.add(light);

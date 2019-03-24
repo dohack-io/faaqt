@@ -1,8 +1,5 @@
 // please don't remove
-import {Mesh, MeshBasicMaterial, Object3D, PlaneGeometry} from 'three';
-import {Player} from './player';
-import {Hurdle} from './Hurdle';
-import {Ebene} from './ebene';
+import {Mesh, MeshBasicMaterial, Object3D} from 'three';
 import {checkHitStatus} from './hit-status-check';
 import {GameData, GameView} from './game-view';
 
@@ -11,44 +8,6 @@ if (module.hot)
     module.hot.dispose(() => location.reload());
 
 const gameView = new GameView(document.body);
-
-let mockData = [
-    true, false, false, false, true, false, false, true, true, false, false,
-    false, false, false, false, true, false, false, true, true, false, false,
-    false, false, false, false, true, false, false, true, true, false, false,
-];
-
-//let geometry: BoxGeometry = new BoxGeometry(1, 1, 1);
-//let material: MeshBasicMaterial = new MeshBasicMaterial({color : 0x00ff00});
-//let cube : Mesh = new Mesh(geometry,material);
-let pufferEbene = 10;
-let length = pufferEbene + mockData.length;
-// Objekte erstellen
-let ebene: Ebene = new Ebene(length);
-let player: Player = new Player();
-
-
-player.body.position.y = Ebene.Y_VALUE;
-player.body.position.x = -pufferEbene;
-
-// console.log(ebene.body.position);
-ebene.body.position.x = length / 2;
-
-let hurdles: Hurdle[] = [];
-for (let i = 0; i <= length; i++) {
-
-    if (mockData[i]) {
-        let h = new Hurdle();
-        // scene.add(hurdles[i].body);
-        // console.log(h.body.position);
-        h.body.position.x = Math.round(-(length / 2));
-        h.body.position.x += i;
-        h.body.position.y = 1.5;
-        ebene.body.add(h.body);
-        hurdles.push(h);
-    }
-
-}
 
 let last;
 
@@ -60,9 +19,13 @@ const getMeshFromGroup = (group: Object3D) => {
 
 let gameData: null | GameData = null;
 
-gameData = gameView.setLevel([
-    false, true, true, false, true
-]);
+let mockData = [
+    true, false, false, false, true, false, false, true, true, false, false,
+    false, false, false, false, true, false, false, true, true, false, false,
+    false, false, false, false, true, false, false, true, true, false, false,
+];
+
+gameData = gameView.setLevel(mockData);
 
 function animate(timestamp) {
     requestAnimationFrame(animate);
@@ -83,7 +46,6 @@ function animate(timestamp) {
         gameView.render();
     }
 };
-ebene.body.position.x = 0;
 
 requestAnimationFrame(timestamp => {
     last = timestamp;
