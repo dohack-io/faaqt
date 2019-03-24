@@ -26,7 +26,7 @@ let mockData = [
 //let material: MeshBasicMaterial = new MeshBasicMaterial({color : 0x00ff00});
 //let cube : Mesh = new Mesh(geometry,material);
 let pufferEbene = 10;
-let length = pufferEbene +  mockData.length;
+let length = pufferEbene + mockData.length;
 // Objekte erstellen
 let ebene: Ebene = new Ebene(length);
 let player: Player = new Player();
@@ -39,7 +39,7 @@ player.body.position.x = -pufferEbene;
 camera.position.z = 18;
 camera.position.y = 7;
 
-console.log(ebene.body.position);
+// console.log(ebene.body.position);
 ebene.body.position.x = length / 2;
 
 let hurdles: Hurdle[] = [];
@@ -48,8 +48,8 @@ for (let i = 0; i <= length; i++) {
     if (mockData[i]) {
         let h = new Hurdle();
         // scene.add(hurdles[i].body);
-        console.log(h.body.position);
-        h.body.position.x =  Math.round(- (length / 2));
+        // console.log(h.body.position);
+        h.body.position.x = Math.round(- (length / 2));
         h.body.position.x += i;
         h.body.position.y = 1.5;
         ebene.body.add(h.body);
@@ -57,7 +57,7 @@ for (let i = 0; i <= length; i++) {
     }
 
 }
-console.log(hurdles);
+// console.log(hurdles);
 // add to the scene
 scene.add(player.body);
 scene.add(ebene.body);
@@ -65,7 +65,7 @@ scene.add(ebene.body);
 let last;
 
 const getMeshFromGroup = (group: Object3D) => {
-    console.log(group);
+    // console.log(group);
     const playerBody = group.children[0] as Mesh;
     return playerBody.material as MeshBasicMaterial;
 };
