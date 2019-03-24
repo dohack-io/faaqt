@@ -40,14 +40,23 @@ for (let i = 1; i <= 20; i++) {
 }
 // add to the scene
 
-let animate = function () {
+let last;
+
+function animate(ts) {
     requestAnimationFrame(animate);
+    const diff = ts - last;
+    last = ts;
 
     renderer.render(scene, camera);
-    camera.position.x += 0.01;
-    player.body.position.x += 0.01;
+    camera.position.x += diff / 500;
+    player.body.position.x += diff / 500;
 };
-animate();
+
+
+requestAnimationFrame(ts => {
+    last = ts;
+    requestAnimationFrame(animate);
+})
 
 // let movecamera = () => {
 //     for (let i = 0; i < 200; i++) {
