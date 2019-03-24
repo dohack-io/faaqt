@@ -4,7 +4,6 @@ import { Player } from './player';
 import { Hurdle } from './Hurdle';
 import { Ebene } from './ebene';
 import { checkHitStatus } from './hit-status-check';
-//import {Player} from "./Hurdle";
 
 if (module.hot)
     module.hot.dispose(() => location.reload());
@@ -47,16 +46,18 @@ let hurdles: Hurdle[] = [];
 for (let i = 0; i <= length; i++) {
 
     if (mockData[i]) {
-        hurdles[i] = new Hurdle();
+        let h = new Hurdle();
         // scene.add(hurdles[i].body);
-        console.log(hurdles[i].body.position);
-        hurdles[i].body.position.x =  Math.round(- (length / 2));
-        hurdles[i].body.position.x += i;
-        hurdles[i].body.position.y = 1.5;
-        ebene.body.add(hurdles[i].body);
+        console.log(h.body.position);
+        h.body.position.x =  Math.round(- (length / 2));
+        h.body.position.x += i;
+        h.body.position.y = 1.5;
+        ebene.body.add(h.body);
+        hurdles.push(h);
     }
 
 }
+console.log(hurdles);
 // add to the scene
 scene.add(player.body);
 scene.add(ebene.body);
@@ -64,6 +65,7 @@ scene.add(ebene.body);
 let last;
 
 const getMeshFromGroup = (group: Object3D) => {
+    console.log(group);
     const playerBody = group.children[0] as Mesh;
     return playerBody.material as MeshBasicMaterial;
 }
