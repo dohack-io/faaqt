@@ -68,22 +68,22 @@ const getMeshFromGroup = (group: Object3D) => {
     console.log(group);
     const playerBody = group.children[0] as Mesh;
     return playerBody.material as MeshBasicMaterial;
-}
+};
 
-function animate(ts) {
+function animate(timestamp) {
     requestAnimationFrame(animate);
-    const diff = ts - last;
-    last = ts;
+    const diff = timestamp - last;
+    last = timestamp;
 
-    camera.position.x += diff / 500;
-    player.body.position.x += diff / 500;
+    // camera.position.x += diff / 500;
+    // player.body.position.x += diff / 500;
 
     const result = checkHitStatus(player.body, hurdles.map(h => h.body));
     const playerMeshMeterial = getMeshFromGroup(player.body);
 
     // camera.position.x += 0.01;
     // player.body.position.x += 0.01 ;
-    ebene.body.position.x -= 0.05;
+    ebene.body.position.x -= diff / 500;
     if (result)
         playerMeshMeterial.color.setRGB(1, 0.2, 0);
     else
@@ -94,10 +94,10 @@ function animate(ts) {
 };
 
 
-requestAnimationFrame(ts => {
-    last = ts;
+requestAnimationFrame(timestamp => {
+    last = timestamp;
     requestAnimationFrame(animate);
-})
+});
 
 // let movecamera = () => {
 //     for (let i = 0; i < 200; i++) {
