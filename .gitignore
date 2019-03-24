@@ -1,8 +1,6 @@
 
-frontend/node_modules/
+.idea
 
-frontend/\.cache/
-
-frontend/dist/
-
-\.idea/
+frontend/dist
+frontend/node_modules
+frontend/.cache

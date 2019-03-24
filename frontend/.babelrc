@@ -1,0 +1,16 @@
+// see:
+// https://github.com/parcel-bundler/parcel/issues/1207
+{
+    "presets": [
+        [
+            "env",
+            {
+                "targets": {
+                    "browsers": [
+                        "last 1 Chrome version"
+                    ]
+                }
+            }
+        ]
+    ]
+}
