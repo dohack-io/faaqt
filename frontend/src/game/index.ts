@@ -1,5 +1,5 @@
 // please don't remove
-import { PerspectiveCamera, Scene, WebGLRenderer, Mesh, MeshBasicMaterial, Object3D } from 'three';
+import { PerspectiveCamera, Scene, WebGLRenderer, Mesh, MeshBasicMaterial, Object3D, PlaneGeometry } from 'three';
 import { Player } from './player';
 import { Hurdle } from './Hurdle';
 import { Ebene } from './ebene';
@@ -30,8 +30,14 @@ let length = pufferEbene + mockData.length;
 // Objekte erstellen
 let ebene: Ebene = new Ebene(length);
 let player: Player = new Player();
+let backgroundGeometry = new PlaneGeometry(window.innerWidth, window.innerHeight);
+let backgroundMaterial = new MeshBasicMaterial({color: 0xffffff});
+let background = new Mesh(backgroundGeometry, backgroundMaterial);
 
 // Initiale Koordinaten setzen
+background.position.x = 0;
+background.position.y = 0;
+background.position.z = -5;
 
 player.body.position.y = Ebene.Y_VALUE;
 player.body.position.x = -pufferEbene;
@@ -61,6 +67,7 @@ for (let i = 0; i <= length; i++) {
 // add to the scene
 scene.add(player.body);
 scene.add(ebene.body);
+scene.add(background);
 
 let last;
 
@@ -83,15 +90,16 @@ function animate(timestamp) {
 
     // camera.position.x += 0.01;
     // player.body.position.x += 0.01 ;
-    ebene.body.position.x -= diff / 100;
+    // ebene.body.position.x -= diff / 400;
     if (result)
         playerMeshMeterial.color.setRGB(1, 0.2, 0);
     else
-        playerMeshMeterial.color.setRGB(0.2, 1, 0);
+        playerMeshMeterial.color.setHex(0xf2a2e8);
 
 
     renderer.render(scene, camera);
 };
+ebene.body.position.x = 0;
 
 
 requestAnimationFrame(timestamp => {

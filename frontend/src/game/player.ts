@@ -28,7 +28,7 @@ export class Player {
 
     public constructor() {
         this._body = new Group();
-        let torsoMaterial: Material = new MeshBasicMaterial({color: 0xcccccc});
+        let torsoMaterial: Material = new MeshBasicMaterial({color: 0xf2a2e8});
         let torsoGeometry = new BoxGeometry(1, 1, 1, 100);
         this._torso = new Mesh(torsoGeometry, torsoMaterial);
 

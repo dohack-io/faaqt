@@ -5,7 +5,7 @@ export class Hurdle {
 
     public constructor() {
         this._body = new Group();
-        let hurdleMaterial: Material = new MeshBasicMaterial({color: 0x00ff00});
+        let hurdleMaterial: Material = new MeshBasicMaterial({color: 0xbaed91});
         let hurdleGeometry = new BoxGeometry(1, 1, 1, 100);
         let hurdleMesh: Mesh = new Mesh(hurdleGeometry, hurdleMaterial);
         this.body.add(hurdleMesh);
