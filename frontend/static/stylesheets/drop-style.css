@@ -1,4 +1,4 @@
-.full-overlay{
+/* .full-overlay{
     font-family: Arial, Helvetica, sans-serif;
     position: absolute;
     width: 100%;
@@ -13,21 +13,49 @@
 
     z-index: 10;
     background-color: rgb(180,180,180,0.8);
+} */
+
+/* .full-overlay:not(.shown){
+    display: none; 
+} */
+
+html, body{
+    width: 100%;
+    height: 100%;
 }
 
-.full-overlay:not(.shown){
+body {
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+canvas {
+    border: 1px solid rgb(221, 221, 221);
+    border-radius: 3px;
+}
+
+
+body:not([data-view="menu"]) .wrapper-menu{
     display: none;
 }
 
-.file-request-popover{
+body:not([data-view="game"]) .wrapper-game{
+    display: none;
+}
+
+body > div {
+    width: 1000px;
+}
+
+.file-request-wrapper{
     display: flex;
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
 
     border-radius: 4px;
-    width: 80%;
-    height: 80%;
     
     background-color: white;
     border: 1px solid rgb(240,240,240);
@@ -49,6 +77,7 @@
 .file-drop-zone{
     width: 80%;
     border: 4px dashed orange;
-    /* height: 400px; */
+    height: 100px;
+
     flex-grow: 1;
 }

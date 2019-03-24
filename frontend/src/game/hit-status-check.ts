@@ -20,8 +20,6 @@ function checkHitStatus(player: Object3D, spikes: Object3D[]) {
     const bb = getBoundingBoxFromGroup(player);
     for (const spike of spikes) {
         const bbOfSpike = getBoundingBoxFromGroup(spike);
-        console.log(bbOfSpike);
-        console.log(bb);
         if (bbOfSpike.intersectsBox(bb))
             return true;
 

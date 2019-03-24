@@ -13,10 +13,10 @@ const loadFile = (file: File) => new Promise<ArrayBuffer>((res, rej) => {
 })
 
 const createBufferSourceNodeFromArrayBuffer = async (audioContext: AudioContext, buffer: ArrayBuffer) => {
-    console.log('buffer', buffer);
+    // console.log('buffer', buffer);
     const dec = await audioContext.decodeAudioData(buffer);
     const decBuffer = dec.getChannelData(0);
-    console.log(decBuffer.slice(3000000, 3000100));
+    // console.log(decBuffer.slice(3000000, 3000100));
     const bufferNode = audioContext.createBufferSource();
     bufferNode.buffer = dec;
 
@@ -67,34 +67,54 @@ export class AudioAnalyzer {
         aa.bufferNode = bufferNode;
         aa.analyserNode = analyserNode;
 
-        console.log(aa.decodedAudioData)
+        // console.log(aa.decodedAudioData)
         return aa;
     }
 
-    getSample(at: number) {
+    play() {
+        this.bufferNode.start();
+    }
 
+    stop() {
+        this.bufferNode.stop();
+    }
+
+    getSample(at: number, length = 1) {
         const dad = this.decodedAudioData;
-        let arrayPosition = Math.floor(dad.length * at / (1000 * dad.duration));
+        const msToArrPos = ms => Math.floor(dad.length * ms / (1000 * dad.duration))
 
-        if (arrayPosition < 0)
+        let fromArrayPosition = msToArrPos(at);
+        let toArrayPosition = msToArrPos(at + length);
+
+        if (fromArrayPosition == toArrayPosition)
+            toArrayPosition++;
+
+        if (fromArrayPosition < 0)
             return null;
-        else if (arrayPosition >= dad.length)
+        else if (fromArrayPosition >= dad.length)
             return null;
 
-        return this.firstChannel[arrayPosition];
+        if (toArrayPosition > dad.length)
+            toArrayPosition = dad.length;
+
+        let sum = 0;
+        for (let i = fromArrayPosition; i < toArrayPosition; i++)
+            sum += this.firstChannel[i] < 0 ? -this.firstChannel[i] : this.firstChannel[i];
+
+        return sum / (toArrayPosition - fromArrayPosition);
     }
 
     createSamples(speed: number) {
         let ts = 0;
         let sample;
         let ret = [];
-        while (sample = this.getSample(ts), ts += speed, sample != null)
+        while (sample = this.getSample(ts, speed), ts += speed, sample != null)
             ret.push(sample);
 
         return ret;
     }
 
     createSpikeArray(speed = 100, treshhold = 0.25) {
-        return this.createSamples(speed).map(v => v > treshhold || (-v) < treshhold);
+        return this.createSamples(speed).map(v => v > treshhold || v < -treshhold);
     }
 }
