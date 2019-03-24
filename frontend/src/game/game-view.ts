@@ -20,11 +20,14 @@ export class GameView {
         this.scene = new Scene();
         this.renderer = new WebGLRenderer();
 
-        const width = window.innerWidth - 300;
-        const height = window.innerHeight - 150;
+        const width = /* window.innerWidth - 300 */ 1200;
+        const height = /* window.innerHeight - 150 */ 675;
 
         this.camera = new PerspectiveCamera(45, width / height, 0.1, 100);
         this.renderer.setSize(width, height);
+
+        this.camera.position.z = 18;
+        this.camera.position.y = 7;
 
         wrapper.appendChild(this.renderer.domElement);
     }
@@ -39,8 +42,6 @@ export class GameView {
         player.body.position.y = Ebene.Y_VALUE;
         player.body.position.x = -pufferEbene;
 
-        this.camera.position.z = 18;
-        this.camera.position.y = 7;
 
         ebene.body.position.x = length / 2;
 
