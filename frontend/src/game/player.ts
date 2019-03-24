@@ -1,6 +1,6 @@
-import {BoxGeometry, Group, Material, Mesh, MeshBasicMaterial} from 'three';
-import {PlayerStatusEnum} from './enums/player-status.enum';
-import {Ebene} from './ebene';
+import { BoxGeometry, Group, Material, Mesh, MeshBasicMaterial } from 'three';
+import { PlayerStatusEnum } from './enums/player-status.enum';
+import { Ebene } from './ebene';
 
 export class Player {
     public static readonly maxJumps: number = 3;
@@ -13,7 +13,7 @@ export class Player {
     /**
      * Gibt an bis zu welch einer Höhe der Spieler springen kann
      */
-    private _jumpHeight: number = Ebene.Y_VALUE + 4;
+    private _jumpHeight: number = Ebene.Y_VALUE + 5;
     private _jumpPressedMax: number = 3;
     private _jumpPressed: number = 1;
     private currentJumps: number = 0;
@@ -28,7 +28,7 @@ export class Player {
 
     public constructor() {
         this._body = new Group();
-        let torsoMaterial: Material = new MeshBasicMaterial({color: 0xf2a2e8});
+        let torsoMaterial: Material = new MeshBasicMaterial({ color: 0xf2a2e8 });
         let torsoGeometry = new BoxGeometry(1, 1, 1, 100);
         this._torso = new Mesh(torsoGeometry, torsoMaterial);
 
@@ -76,15 +76,21 @@ export class Player {
             if (this._body.position.y >= this._jumpHeight) {
                 this.jumpDirection = false;
             }
+            const q = 0.04
 
             if (this.jumpDirection && this._body.position.y <= this._jumpHeight) {
                 this._status = PlayerStatusEnum.JUMPING;
-                this._body.position.y += 0.1;
+                // this._body.position.y += 0.1;
+                const remainingJump = 1 + this._jumpHeight - this._body.position.y;
+                this._body.position.y += remainingJump * 0.04
                 this.id = requestAnimationFrame(doJump);
 
             } else if (!this.jumpDirection && this._body.position.y >= Ebene.Y_VALUE) {
                 this._status = PlayerStatusEnum.JUMPING;
-                this._body.position.y -= 0.1;
+                //  -= 0.35;
+                const remainingDrop = 1 + this._body.position.y - Ebene.Y_VALUE;
+                console.log('remaining ', remainingDrop)
+                this._body.position.y -= (this._jumpHeight - remainingDrop) * 0.04 * 2
                 this.id = requestAnimationFrame(doJump);
 
             } else {
