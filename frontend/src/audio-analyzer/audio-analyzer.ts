@@ -71,25 +71,16 @@ export class AudioAnalyzer {
         return aa;
     }
 
-    // constructor() {}
-
     getSample(at: number) {
-        // console.log('firstChannel', this.firstChannel);
-        // const spectrumSize = this.analyserNode.frequencyBinCount;
-        // const spectrum = new Uint8Array(spectrumSize);
-        // this.analyserNode.getByteFrequencyData(spectrum);
-        // return spectrum;
 
         const dad = this.decodedAudioData;
         let arrayPosition = Math.floor(dad.length * at / (1000 * dad.duration));
-        // console.log('arrayPosition', dad.length, arrayPosition);
+
         if (arrayPosition < 0)
             return null;
         else if (arrayPosition >= dad.length)
             return null;
 
-        // console.log('this.firstChannel[' + arrayPosition + ']', this.firstChannel[arrayPosition]);
-        // console.log('this.firstChannel', this.firstChannel.slice(0, 10));
         return this.firstChannel[arrayPosition];
     }
 
@@ -104,6 +95,6 @@ export class AudioAnalyzer {
     }
 
     createSpikeArray(speed = 100, treshhold = 0.25) {
-        return this.createSamples(speed).map(v => v > treshhold);
+        return this.createSamples(speed).map(v => v > treshhold || (-v) < treshhold);
     }
 }
