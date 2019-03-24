@@ -1,8 +1,8 @@
 // please don't remove
-import {PerspectiveCamera, Scene, WebGLRenderer} from 'three';
-import {Player} from './player';
-import {Hurdle} from './Hurdle';
-import {Ebene} from './ebene';
+import { PerspectiveCamera, Scene, WebGLRenderer } from 'three';
+import { Player } from './player';
+import { Hurdle } from './Hurdle';
+import { Ebene } from './ebene';
 //import {Player} from "./Hurdle";
 
 if (module.hot)
@@ -40,17 +40,8 @@ for (let i = 1; i <= 20; i++) {
 }
 // add to the scene
 
-let winkel = 0;
-let drehWert = 0.1;
 let animate = function () {
     requestAnimationFrame(animate);
-
-    if (winkel >= 1 || winkel == 0) {
-        drehWert = (-1) * drehWert;
-    }
-    winkel += drehWert;
-
-    player.body.rotation.y += drehWert;
 
     renderer.render(scene, camera);
     camera.position.x += 0.01;
