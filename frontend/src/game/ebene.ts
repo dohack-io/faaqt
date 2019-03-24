@@ -12,9 +12,9 @@ export class Ebene {
      */
     public static readonly Y_VALUE = 1.5;
 
-    public constructor() {
+    public constructor(length: number) {
         this._body = new Group();
-        this._ebeneGeometry = new PlaneGeometry(200, 2, 2);
+        this._ebeneGeometry = new PlaneGeometry(length, 2, 2);
 
         //this.ebene.applyMatrix(new Matrix4().makeRotationX(-Math.PI/2));
 
