@@ -1,8 +1,9 @@
 // please don't remove
-import { PerspectiveCamera, Scene, WebGLRenderer } from 'three';
+import { PerspectiveCamera, Scene, WebGLRenderer, Mesh, MeshBasicMaterial, Object3D } from 'three';
 import { Player } from './player';
 import { Hurdle } from './Hurdle';
 import { Ebene } from './ebene';
+import { checkHitStatus } from './hit-status-check';
 //import {Player} from "./Hurdle";
 
 if (module.hot)
@@ -31,10 +32,10 @@ scene.add(ebene.cylinder);
 
 let hurdles: Hurdle[] = [];
 
-for (let i = 1; i <= 20; i++) {
+for (let i = 0; i < 20; i++) {
     hurdles[i] = new Hurdle();
     scene.add(hurdles[i].body);
-    hurdles[i].body.position.x = 2.5 * i;
+    hurdles[i].body.position.x = 5.5 * i;
     hurdles[i].body.position.y = -6.35;
 
 }
@@ -42,14 +43,29 @@ for (let i = 1; i <= 20; i++) {
 
 let last;
 
+const getMeshFromGroup = (group: Object3D) => {
+    const playerBody = group.children[0] as Mesh;
+    return playerBody.material as MeshBasicMaterial;
+}
+
 function animate(ts) {
     requestAnimationFrame(animate);
     const diff = ts - last;
     last = ts;
 
-    renderer.render(scene, camera);
     camera.position.x += diff / 500;
     player.body.position.x += diff / 500;
+
+    const result = checkHitStatus(player.body, hurdles.map(h => h.body));
+    const playerMeshMeterial = getMeshFromGroup(player.body);
+
+    if (result)
+        playerMeshMeterial.color.setRGB(1, 0.2, 0);
+    else
+        playerMeshMeterial.color.setRGB(0.2, 1, 0);
+
+
+    renderer.render(scene, camera);
 };
 
 
