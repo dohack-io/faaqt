@@ -83,7 +83,7 @@ function animate(timestamp) {
 
     // camera.position.x += 0.01;
     // player.body.position.x += 0.01 ;
-    ebene.body.position.x -= diff / 500;
+    ebene.body.position.x -= diff / 100;
     if (result)
         playerMeshMeterial.color.setRGB(1, 0.2, 0);
     else
