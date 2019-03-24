@@ -22,7 +22,7 @@ let gameData: null | GameData = null;
 
 gameData = gameView.setLevel([
     false, true, true, false, true
-])
+]);
 
 function animate(timestamp) {
     requestAnimationFrame(animate);
@@ -39,6 +39,8 @@ function animate(timestamp) {
             playerMeshMeterial.color.setRGB(1, 0.2, 0);
         else
             playerMeshMeterial.color.setRGB(0.2, 1, 0);
+
+        gameView.render();
     }
 };
 
@@ -48,6 +50,6 @@ requestAnimationFrame(timestamp => {
 });
 
 window.addEventListener('keydown', (e) => {
-    if (e.key == 'SPACE')
+    if (e.key == ' ')
         gameView.jump();
 });
