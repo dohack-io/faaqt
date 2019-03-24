@@ -3,6 +3,7 @@ import {PlayerStatusEnum} from './enums/player-status.enum';
 import {Ebene} from './ebene';
 
 export class Player {
+    public static readonly maxJumps: number = 3;
     /**
      * Fasst alle  Objekte zusammen, die zu einem Player gehören
      */
@@ -12,9 +13,17 @@ export class Player {
     /**
      * Gibt an bis zu welch einer Höhe der Spieler springen kann
      */
-    private _jumpHeight: number = Ebene.Y_VALUE + 1;
-    private _jumpTime: number = 3;
+    private _jumpHeight: number = Ebene.Y_VALUE + 4;
+    private _jumpPressedMax: number = 3;
     private _jumpPressed: number = 1;
+    private currentJumps: number = 0;
+    private jumpDirection: boolean = true;
+
+    /**
+     * Animation ID
+     */
+    private id: number;
+
     private _status: PlayerStatusEnum = PlayerStatusEnum.RUNNING;
 
     public constructor() {
@@ -28,60 +37,68 @@ export class Player {
     }
 
     jump(): void {
-        if (this._jumpPressed <= this._jumpTime) {
-            this._jumpPressed++;
-            console.log("++");
-            let factor = 1;
-            switch (this._jumpPressed) {
-                case 1:
-                    factor = 1.2;
-                    break;
-                case 2:
-                    factor = 1.4;
-                    break;
-                case 3:
-                    factor = 1.5;
-                    break;
-                default:
-                    factor = 1.5;
-            }
-            this._jumpHeight = this._jumpHeight * factor;
-            console.log(this._jumpHeight);
-        }
+        // if (this._jumpPressed <= this._jumpPressedMax) {
+        //     this._jumpPressed++;
+        //     console.log("++");
+        //     let factor = 1;
+        //     switch (this._jumpPressed) {
+        //         case 1:
+        //             factor = 1.2;
+        //             break;
+        //         case 2:
+        //             factor = 1.4;
+        //             break;
+        //         case 3:
+        //             factor = 1.5;
+        //             break;
+        //         default:
+        //             factor = 1.5;
+        //     }
+        //     this._jumpHeight = this._jumpHeight * factor;
+        //     console.log(this._jumpHeight);
+        // }
         // Nix machen, wenn gerade in der Jump Animation
         // if (this.status == PlayerStatusEnum.JUMPING)
         //     return;
 
-        let direction = true;
-        let id;
-        if (this._status == PlayerStatusEnum.JUMPING)
-            return;
-
+        if (this.currentJumps <= this.jumpPressedMax) {
+            this.jumpDirection = true;
+        }
+        // if (this._status != PlayerStatusEnum.JUMPING && this.currentJumps >= Player.maxJumps) {
+        //     this._body.position.y = Ebene.Y_VALUE;
+        //     return;
+        // }
+        // cancelAnimationFrame(this.id);
+        this.currentJumps++;
+        console.log(this.currentJumps);
+        cancelAnimationFrame(this.id);
         let doJump = () => {
             if (this._body.position.y >= this._jumpHeight) {
-                direction = false;
+                this.jumpDirection = false;
             }
 
-            if (direction && this._body.position.y <= this._jumpHeight) {
+            if (this.jumpDirection && this._body.position.y <= this._jumpHeight) {
                 this._status = PlayerStatusEnum.JUMPING;
                 this._body.position.y += 0.1;
-                id = requestAnimationFrame(doJump);
+                this.id = requestAnimationFrame(doJump);
 
-            } else if (!direction && this._body.position.y >= Ebene.Y_VALUE) {
+            } else if (!this.jumpDirection && this._body.position.y >= Ebene.Y_VALUE) {
                 this._status = PlayerStatusEnum.JUMPING;
                 this._body.position.y -= 0.1;
-                id = requestAnimationFrame(doJump);
+                this.id = requestAnimationFrame(doJump);
 
             } else {
                 this._status = PlayerStatusEnum.RUNNING;
-                cancelAnimationFrame(id);
+                cancelAnimationFrame(this.id);
+                console.log("cancel");
                 this._body.position.y = Ebene.Y_VALUE;
-                this._jumpHeight = Ebene.Y_VALUE + 1;
+                this._jumpHeight = Ebene.Y_VALUE + 4;
                 this._jumpPressed = 1;
+                this.currentJumps = 0;
             }
         };
-        requestAnimationFrame(doJump);
 
+        requestAnimationFrame(doJump);
         // let tweenJump = new TWEEN.Tween(this._body.position)
         //     .to({x: this._jumpHeight}, 1000)
         //     .easing(TWEEN.Easing.Quadratic.InOut)
@@ -97,12 +114,12 @@ export class Player {
 
     }
 
-    get jumpTime(): number {
-        return this._jumpTime;
+    get jumpPressedMax(): number {
+        return this._jumpPressedMax;
     }
 
-    set jumpTime(value: number) {
-        this._jumpTime = value;
+    set jumpPressedMax(value: number) {
+        this._jumpPressedMax = value;
     }
 
     get jumpPressed(): number {
